@@ -1,0 +1,89 @@
+<div class="home-container">
+  <header class="header">
+    <div class="user-info">
+      <h2>Bem-vindo, {{ currentUser?.username || 'Usuário' }}!</h2>
+      <p>Saldo disponível: {{ availableBalance | currency:'BRL' }}</p>
+    </div>
+    <button class="logout-btn" (click)="logout()">Sair</button>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Carregando dados financeiros...</p>
+  </div>
+
+  <div *ngIf="error && !isLoading" class="error-state">
+    <p>{{ error }}</p>
+    <button (click)="loadUserData()">Tentar novamente</button>
+  </div>
+
+
+  <div *ngIf="!isLoading && !error && hasNoTransactions()" class="empty-state">
+    <div class="empty-content">
+      <h3>Nada por aqui ainda</h3>
+      <p>Comece cadastrando sua primeira receita ou despesa</p>
+      </div>
+  </div>
+
+  <div *ngIf="!isLoading && !error && !hasNoTransactions()" class="main-content">
+    <div class="action-buttons">
+      <button class="transaction-btn" routerLink="/incomes">
+        + Nova Receita
+      </button>
+      <button class="transaction-btn" routerLink="/expenses">
+        + Nova Despesa
+      </button>
+    </div> 
+
+    <section class="summary">
+      <div class="summary-card">
+        <h3>Salário Base</h3>
+        <p>{{ (currentUser?.baseSalary ?? 0) | currency:'BRL' }}</p>
+      </div>
+      <div class="summary-card">
+        <h3>Total de Receitas</h3>
+        <p>{{ incomes.length }} itens</p>
+      </div>
+      <div class="summary-card">
+        <h3>Total de Despesas</h3>
+        <p>{{ expenses.length }} itens</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h3>Últimas Receitas</h3>
+      </div>
+      <div *ngIf="incomes.length === 0" class="empty-message">
+        Nenhuma receita cadastrada
+      </div>
+      <ul *ngIf="incomes.length > 0" class="transaction-list">
+        <li *ngFor="let income of incomes.slice(0, 3)" class="transaction-item income-item">
+          <div class="transaction-info">
+            <span class="transaction-name">{{ income.name }}</span>
+            <span class="transaction-date">{{ income.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <span class="transaction-amount">+ {{ income.amount | currency:'BRL' }}</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h3>Últimas Despesas</h3>
+      </div>
+      <div *ngIf="expenses.length === 0" class="empty-message">
+        Nenhuma despesa cadastrada
+      </div>
+      <ul *ngIf="expenses.length > 0" class="transaction-list">
+        <li *ngFor="let expense of expenses.slice(0, 3)" class="transaction-item expense-item">
+          <div class="transaction-info">
+            <span class="transaction-name">{{ expense.name }}</span>
+            <span class="transaction-date">{{ expense.date | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <span class="transaction-amount">- {{ expense.amount | currency:'BRL' }}</span>
+        </li>
+      </ul>
+    </section>
+  </div>
+</div>
