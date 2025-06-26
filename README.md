@@ -1,8 +1,3 @@
-Aqui está um `README.md` completo e profissional para seu projeto **Finitor**, com instruções para rodar tanto o **backend (Spring Boot)** quanto o **frontend (Angular)**, incluindo a dependência do Docker:
-
----
-
-````markdown
 # 💰 Finitor - Gerenciador de Finanças Pessoais
 
 Finitor é uma aplicação web full stack para controle financeiro pessoal. Com ele, você pode cadastrar receitas e despesas, visualizar saldo disponível.
@@ -70,17 +65,6 @@ finitor/
 4. Acesse a aplicação em: `http://localhost:4200`
 
 ---
-
-
-## 📚 Documentação da API
-
-A API expõe rotas RESTful:
-
-* `POST /api/auth/login`
-* `GET /api/user/{userId}/expenses`
-* `POST /api/user/{userId}/incomes`
-
-
 
 
 ## 🛠 Tecnologias
